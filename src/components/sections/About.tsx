@@ -17,16 +17,16 @@ function About() {
         <div className="flex-1 min-w-0">
           <h1 className="text-4xl font-bold mb-4 ">About Me</h1>
           <p className="mb-4">
-            I'm a full-stack developer with a passion for building fast,
-            intuitive web and mobile apps. I specialize in React, React Native,
-            Go, and Node.js, with experience across the full development
-            lifecycle—from backend architecture to pixel-perfect UIs. Whether
-            I'm designing APIs, deploying to the cloud, or fine-tuning
-            performance, I focus on clean code, clear UX, and real-world impact.
-            I've recently launched a cross-platform app called PixelSnap and
-            enjoy blending development with product thinking, automation, and a
-            touch of design. Outside of coding, I'm into fitness, side projects,
-            and the occasional woodworking challenge.
+            I help businesses bring ideas to life through clean, high-performing
+            web and mobile applications. Whether you need a fast MVP, a polished
+            product, or help scaling your existing stack, I deliver reliable,
+            modern solutions using tools like React, React Native, Go, and
+            Node.js. From backend architecture to frontend design, I focus on
+            speed, usability, and maintainability—so you get software that not
+            only works, but works well. I’ve built cross-platform tools,
+            integrated cloud services, and optimized performance for real-world
+            users—all with a mindset rooted in problem-solving and product
+            value.
           </p>
         </div>
       </div>
