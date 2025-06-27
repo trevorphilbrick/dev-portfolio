@@ -3,6 +3,8 @@ import { Badge } from "../ui/badge";
 import { useState } from "react";
 import { FaLinkedinIn } from "react-icons/fa";
 import { FaGithub } from "react-icons/fa";
+import Navbar from "../ui/Navbar";
+import HamburgerNav from "../ui/HamburgerNav";
 
 const techStack = [
   "React",
@@ -27,6 +29,8 @@ function Hero() {
 
   return (
     <div className=" py-24  bg-[url(/plus.svg)] bg-center bg-fixed">
+      <Navbar />
+      <HamburgerNav />
       <div className="absolute top-0 right-0 flex gap-2 pt-4 pr-4">
         <a
           href="https://www.linkedin.com/in/trevor-philbrick"
