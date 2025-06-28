@@ -1,32 +1,18 @@
-import {
-  Card,
-  CardHeader,
-  CardTitle,
-  CardContent,
-  CardDescription,
-} from "./card";
+import { Card, CardHeader, CardTitle, CardContent } from "./card";
 import { Badge } from "./badge";
+import { Link } from "@tanstack/react-router";
+import { Route as ProjectIdRoute } from "@/routes/projects/$projectId";
 import { Button } from "./button";
 function ProjectCard({
   title,
-  description,
   image,
   tags,
-  links,
   index,
 }: {
   title: string;
-  description: string;
   image: string;
   tags: string[];
   index: number;
-  links?: {
-    name: string;
-    url: string;
-    icon?: React.ReactNode;
-    variant?: "default" | "reverse" | "neutral" | "noShadow";
-    index?: number;
-  }[];
 }) {
   return (
     <Card className="w-full hover:scale-105 transition-all duration-300 group">
@@ -41,31 +27,23 @@ function ProjectCard({
       </CardHeader>
       <CardContent>
         <CardTitle className="mb-2">{title}</CardTitle>
-        <div className="flex gap-2 mb-2 flex-wrap">
+        <div className="flex gap-2 mb-6 flex-wrap">
           {tags.map((tag) => (
-            <Badge key={tag}>{tag}</Badge>
+            <Badge key={tag} className="bg-secondary-background">
+              {tag}
+            </Badge>
           ))}
         </div>
-        <CardDescription className="mb-4 line-clamp-3">
-          {description}
-        </CardDescription>
-        <div className="flex gap-2">
-          {links &&
-            links.map((link) => (
-              <Button key={link.name} variant={link.variant} className="px-0">
-                <a
-                  href={link.url}
-                  className={`px-4 py-2 ${
-                    link.variant === "default"
-                      ? "bg-default text-default-foreground"
-                      : ""
-                  }`}
-                >
-                  {link.icon} {link.name}
-                </a>
-              </Button>
-            ))}
-        </div>
+
+        <Link
+          to={ProjectIdRoute.to}
+          params={{ projectId: index.toString() }}
+          className="w-full"
+        >
+          <Button variant="default" className="w-full">
+            View Project
+          </Button>
+        </Link>
       </CardContent>
     </Card>
   );
