@@ -1,24 +1,7 @@
-export enum ProjectLinkVariant {
-  Neutral = "neutral",
-  Default = "default",
-}
+import { ProjectLinkVariant } from "@/types/ProjectLinkVarient";
+import type { Project } from "@/types/Project";
 
-export interface ProjectLink {
-  name: string;
-  url: string;
-  variant: ProjectLinkVariant;
-}
-
-export interface Project {
-  id: number;
-  name: string;
-  description: string;
-  image: string;
-  tags: string[];
-  links: ProjectLink[];
-}
-
-export const PROJECT_DATA = [
+export const PROJECT_DATA: Project[] = [
   {
     id: 1,
     name: "PixelSnag Desktop App",
