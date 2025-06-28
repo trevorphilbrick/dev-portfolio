@@ -10,6 +10,7 @@ import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import ProjectCard from "@/components/ui/ProjectCard";
+import { useEffect } from "react";
 
 export const Route = createFileRoute("/projects/$projectId")({
   component: RouteComponent,
@@ -20,6 +21,12 @@ function RouteComponent() {
   const { projectId } = Route.useParams();
   const canGoBack = useCanGoBack();
   const project = PROJECT_DATA.find((p) => p.id === parseInt(projectId));
+
+  // Scroll to top when component mounts
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [projectId]);
+
   console.log(project);
   return (
     <div className=" py-24  bg-[url(/plus.svg)] bg-center bg-fixed min-h-screen">
