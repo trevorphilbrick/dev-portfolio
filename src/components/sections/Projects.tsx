@@ -1,5 +1,5 @@
 import ProjectCard from "../ui/ProjectCard";
-import { PROJECT_DATA, type ProjectLink } from "@/json/projectData";
+import { PROJECT_DATA } from "@/json/projectData";
 
 function Projects() {
   return (
