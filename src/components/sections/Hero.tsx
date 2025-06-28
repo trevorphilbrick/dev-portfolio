@@ -29,7 +29,9 @@ function Hero() {
 
   return (
     <div className=" py-24  bg-[url(/plus.svg)] bg-center bg-fixed">
+      {/* Only show navbar on desktop */}
       <Navbar />
+      {/* Show hamburger nav on mobile */}
       <HamburgerNav />
       <div className="absolute top-0 right-0 flex gap-2 pt-4 pr-4">
         <a

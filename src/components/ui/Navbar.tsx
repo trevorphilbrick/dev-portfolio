@@ -1,4 +1,4 @@
-import { scrollToSection } from "@/utils/scrollToSection";
+import { scrollToSection } from "@/lib/scrollToSection";
 
 function Navbar() {
   return (

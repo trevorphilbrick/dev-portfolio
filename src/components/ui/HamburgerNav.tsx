@@ -2,7 +2,8 @@ import { useState } from "react";
 import { FaHamburger } from "react-icons/fa";
 import { IoMdClose } from "react-icons/io";
 import { Button } from "./button";
-import { scrollToSection } from "@/utils/scrollToSection";
+import { scrollToSection } from "@/lib/scrollToSection";
+import FixedMenuBox from "./FixedMenuBox";
 
 function HamburgerNav() {
   const [isOpen, setIsOpen] = useState(false);
@@ -70,12 +71,12 @@ function HamburgerNav() {
           </div>
         </div>
       ) : (
-        <div className="fixed top-0 left-0 bg-[#7df9ff] border-r-2 border-b-2 z-100 md:hidden">
+        <FixedMenuBox containerStyle="md:hidden">
           <FaHamburger
             onClick={() => setIsOpen(true)}
             className=" text-2xl  m-4 "
           />
-        </div>
+        </FixedMenuBox>
       )}
     </>
   );
