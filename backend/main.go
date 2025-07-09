@@ -3,6 +3,8 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"os"
+	"strings"
 	"time"
 
 	"github.com/gin-gonic/gin"
@@ -19,7 +21,7 @@ var dbArgs = DbArgs{
 	dbPath: "../db/trevorphilbrick.db",
 }
 
-const sourceToken = "Bearer 1234567890"
+
 
 // todo: get proper types for posts
 type Post struct {
@@ -32,7 +34,14 @@ type Post struct {
 }
 
 func checkToken(token string) bool {
-	if token == sourceToken {
+	trimmedToken := strings.ReplaceAll(token, "Bearer ", "")
+	sourceTokenByteCode, err := os.ReadFile(("../shared/sourceToken.txt"))
+
+	if err != nil {
+		fmt.Printf("Error reading token file: %v\n",err)
+	}
+
+	if trimmedToken == string(sourceTokenByteCode) {
 		return true
 	}
 	return false
