@@ -27,7 +27,6 @@ function RouteComponent() {
     window.scrollTo(0, 0);
   }, [projectId]);
 
-  console.log(project);
   return (
     <div className=" py-24  bg-[url(/plus.svg)] bg-center bg-fixed min-h-screen">
       <FixedMenuBox containerStyle="group">
@@ -79,8 +78,19 @@ function RouteComponent() {
                 <h3 className="text-lg font-bold">Links</h3>
                 <div className="flex flex-wrap gap-2">
                   {project?.links.map((link) => (
-                    <Button key={link.name} variant={link.variant}>
-                      {link.name}
+                    <Button
+                      key={link.name}
+                      variant={link.variant}
+                      className="p-0"
+                    >
+                      <a
+                        href={link.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="px-4 py-2 bg-transparent"
+                      >
+                        {link.name}
+                      </a>
                     </Button>
                   ))}
                 </div>
