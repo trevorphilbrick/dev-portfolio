@@ -133,33 +133,33 @@ func createPost(c *gin.Context) {
 	})
 }
 
-func createTables() {
-	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
+// func createTables() {
+// 	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer db.Close()
 
-	// create blog_posts table
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS blog_posts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT, content TEXT, image TEXT, timestamp DATE)")
-	if err != nil {
-		panic(err)
-	}
+// 	// create blog_posts table
+// 	_, err = db.Exec("CREATE TABLE IF NOT EXISTS blog_posts (id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT NOT NULL, description TEXT, content TEXT, image TEXT, timestamp DATE)")
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	// create tags table
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS tags (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL)")
-	if err != nil {
-		panic(err)
-	}
+// 	// create tags table
+// 	_, err = db.Exec("CREATE TABLE IF NOT EXISTS tags (id INTEGER PRIMARY KEY AUTOINCREMENT, name TEXT UNIQUE NOT NULL)")
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	// create post_tags junction table
-	_, err = db.Exec("CREATE TABLE IF NOT EXISTS post_tags (post_id INTEGER, tag_id INTEGER, PRIMARY KEY (post_id, tag_id), FOREIGN KEY (post_id) REFERENCES blog_posts(id) ON DELETE CASCADE, FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE)")
-	if err != nil {
-		panic(err)
-	}
+// 	// create post_tags junction table
+// 	_, err = db.Exec("CREATE TABLE IF NOT EXISTS post_tags (post_id INTEGER, tag_id INTEGER, PRIMARY KEY (post_id, tag_id), FOREIGN KEY (post_id) REFERENCES blog_posts(id) ON DELETE CASCADE, FOREIGN KEY (tag_id) REFERENCES tags(id) ON DELETE CASCADE)")
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	fmt.Println("All tables created successfully")
-}
+// 	fmt.Println("All tables created successfully")
+// }
 
 func getPost(c *gin.Context) {
 	token := c.GetHeader("Authorization")
@@ -211,7 +211,7 @@ func deletePost(c *gin.Context) {
 	})
 }
 func main() {
-	createTables()
+	// createTables()
 
 	router := gin.Default()
 
