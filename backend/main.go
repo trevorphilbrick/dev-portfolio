@@ -7,15 +7,18 @@ import (
 )
 
 func main() {
-    fmt.Println("Step 1: Starting main")
+    fmt.Println("🚀 Starting")
 
-    router := gin.Default()
-    fmt.Println("Step 2: Gin router created")
+    r := gin.Default()
+    fmt.Println("✅ Gin initialized")
 
-    err := router.Run("0.0.0.0:8080")
+    r.GET("/ping", func(c *gin.Context) {
+        c.JSON(200, gin.H{"message": "pong"})
+    })
+
+    fmt.Println("🌐 Server starting on :8080")
+    err := r.Run("0.0.0.0:8080")
     if err != nil {
-        fmt.Println("Step 3: Error starting server:", err)
-    } else {
-        fmt.Println("Step 3: Server should be running (this won’t print unless Run returns)")
+        fmt.Println("❌ Server failed:", err)
     }
 }
