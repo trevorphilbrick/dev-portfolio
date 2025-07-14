@@ -4,16 +4,18 @@ import (
 	"fmt"
 
 	"github.com/gin-gonic/gin"
-	_ "modernc.org/sqlite"
 )
 
-
 func main() {
-	fmt.Println("Starting server...")
+    fmt.Println("Step 1: Starting main")
 
-	router := gin.Default()
+    router := gin.Default()
+    fmt.Println("Step 2: Gin router created")
 
-
-
-	router.Run("0.0.0.0:8080")
+    err := router.Run("0.0.0.0:8080")
+    if err != nil {
+        fmt.Println("Step 3: Error starting server:", err)
+    } else {
+        fmt.Println("Step 3: Server should be running (this won’t print unless Run returns)")
+    }
 }
