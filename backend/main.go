@@ -1,12 +1,6 @@
 package main
 
 import (
-	"database/sql"
-	"fmt"
-	"os"
-	"strings"
-	"time"
-
 	"github.com/gin-gonic/gin"
 	_ "modernc.org/sqlite"
 )
@@ -33,105 +27,105 @@ type Post struct {
 	Timestamp string `json:"timestamp"`
 }
 
-func checkToken(token string) bool {
-	trimmedToken := strings.ReplaceAll(token, "Bearer ", "")
-	sourceTokenByteCode, err := os.ReadFile(("../shared/sourceToken.txt"))
+// func checkToken(token string) bool {
+// 	trimmedToken := strings.ReplaceAll(token, "Bearer ", "")
+// 	sourceTokenByteCode, err := os.ReadFile(("../shared/sourceToken.txt"))
 
-	if err != nil {
-		fmt.Printf("Error reading token file: %v\n",err)
-	}
+// 	if err != nil {
+// 		fmt.Printf("Error reading token file: %v\n",err)
+// 	}
 
-	if trimmedToken == string(sourceTokenByteCode) {
-		return true
-	}
-	return false
-}
+// 	if trimmedToken == string(sourceTokenByteCode) {
+// 		return true
+// 	}
+// 	return false
+// }
 
-func getPosts(c *gin.Context) {
-	token := c.GetHeader("Authorization")
-	if !checkToken(token) {
-		c.JSON(401, gin.H{"error": "Unauthorized"})
-		return
-	}
+// func getPosts(c *gin.Context) {
+// 	token := c.GetHeader("Authorization")
+// 	if !checkToken(token) {
+// 		c.JSON(401, gin.H{"error": "Unauthorized"})
+// 		return
+// 	}
 
-	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
+// 	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer db.Close()
 
-	// Check the connection
-	if err := db.Ping(); err != nil {
-		panic(err)
-	}
+// 	// Check the connection
+// 	if err := db.Ping(); err != nil {
+// 		panic(err)
+// 	}
 
-	// get all posts from database
-	rows, err := db.Query("SELECT * FROM blog_posts")
-	if err != nil {
-		panic(err)
-	}
-	defer rows.Close()
+// 	// get all posts from database
+// 	rows, err := db.Query("SELECT * FROM blog_posts")
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer rows.Close()
 
-	var posts []Post
-	for rows.Next() {
-		var post Post
-		err := rows.Scan(&post.Id, &post.Title, &post.Description, &post.Content, &post.Image, &post.Timestamp)
-		if err != nil {
-			panic(err)
-		}
-		posts = append(posts, post)
-	}
+// 	var posts []Post
+// 	for rows.Next() {
+// 		var post Post
+// 		err := rows.Scan(&post.Id, &post.Title, &post.Description, &post.Content, &post.Image, &post.Timestamp)
+// 		if err != nil {
+// 			panic(err)
+// 		}
+// 		posts = append(posts, post)
+// 	}
 
-	fmt.Println("Connected to SQLite database.")
+// 	fmt.Println("Connected to SQLite database.")
 
-	c.JSON(200, gin.H{
-		"posts": posts,
-	})
-  	}
+// 	c.JSON(200, gin.H{
+// 		"posts": posts,
+// 	})
+//   	}
 
-func createPost(c *gin.Context) {
-	token := c.GetHeader("Authorization")
-	if !checkToken(token) {
-		c.JSON(401, gin.H{"error": "Unauthorized"})
-		return
-	}
-	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
+// func createPost(c *gin.Context) {
+// 	token := c.GetHeader("Authorization")
+// 	if !checkToken(token) {
+// 		c.JSON(401, gin.H{"error": "Unauthorized"})
+// 		return
+// 	}
+// 	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer db.Close()
 
-	// get post data from request
-	var post Post
-	if err := c.ShouldBindJSON(&post); err != nil {
-		c.JSON(400, gin.H{"error": err.Error()})
-		return
-	}
+// 	// get post data from request
+// 	var post Post
+// 	if err := c.ShouldBindJSON(&post); err != nil {
+// 		c.JSON(400, gin.H{"error": err.Error()})
+// 		return
+// 	}
 
-	// check if post is valid
-	if  post.Title == "" || post.Description == "" || post.Content == "" || post.Image == "" {
-		c.JSON(400, gin.H{"error": "Invalid post data"})
-		return
-	}
+// 	// check if post is valid
+// 	if  post.Title == "" || post.Description == "" || post.Content == "" || post.Image == "" {
+// 		c.JSON(400, gin.H{"error": "Invalid post data"})
+// 		return
+// 	}
 
-	// insert post into database
-	stmt, err := db.Prepare("INSERT INTO blog_posts (title, description, content, image, timestamp) VALUES (?, ?, ?, ?, ?)")
-	if err != nil {
-		panic(err)
-	}
-	defer stmt.Close()
+// 	// insert post into database
+// 	stmt, err := db.Prepare("INSERT INTO blog_posts (title, description, content, image, timestamp) VALUES (?, ?, ?, ?, ?)")
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer stmt.Close()
 
 
-	// execute statement
-	_, err = stmt.Exec(post.Title, post.Description, post.Content, post.Image, time.Now().Format("2006-01-02 15:04:05"))
-	if err != nil {
-		panic(err)
-	}
+// 	// execute statement
+// 	_, err = stmt.Exec(post.Title, post.Description, post.Content, post.Image, time.Now().Format("2006-01-02 15:04:05"))
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	c.JSON(200, gin.H{
-		"message": "Post created successfully",
-	})
-}
+// 	c.JSON(200, gin.H{
+// 		"message": "Post created successfully",
+// 	})
+// }
 
 // func createTables() {
 // 	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
@@ -161,64 +155,64 @@ func createPost(c *gin.Context) {
 // 	fmt.Println("All tables created successfully")
 // }
 
-func getPost(c *gin.Context) {
-	token := c.GetHeader("Authorization")
-	if !checkToken(token) {
-		c.JSON(401, gin.H{"error": "Unauthorized"})
-		return
-	}
-	id := c.Param("id")
-	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
+// func getPost(c *gin.Context) {
+// 	token := c.GetHeader("Authorization")
+// 	if !checkToken(token) {
+// 		c.JSON(401, gin.H{"error": "Unauthorized"})
+// 		return
+// 	}
+// 	id := c.Param("id")
+// 	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer db.Close()
 
-	// get post from database
-	row := db.QueryRow("SELECT * FROM blog_posts WHERE id = ?", id)
-	var post Post
-	err = row.Scan(&post.Id, &post.Title, &post.Description, &post.Content, &post.Image, &post.Timestamp)
-	if err != nil {
-		panic(err)
-	}
+// 	// get post from database
+// 	row := db.QueryRow("SELECT * FROM blog_posts WHERE id = ?", id)
+// 	var post Post
+// 	err = row.Scan(&post.Id, &post.Title, &post.Description, &post.Content, &post.Image, &post.Timestamp)
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	c.JSON(200, gin.H{
-		"post": post,
-	})
-}
+// 	c.JSON(200, gin.H{
+// 		"post": post,
+// 	})
+// }
 
-func deletePost(c *gin.Context) {
-	token := c.GetHeader("Authorization")
-	if !checkToken(token) {
-		c.JSON(401, gin.H{"error": "Unauthorized"})
-		return
-	}
-	id := c.Param("id")
-	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
-	if err != nil {
-		panic(err)
-	}
-	defer db.Close()
+// func deletePost(c *gin.Context) {
+// 	token := c.GetHeader("Authorization")
+// 	if !checkToken(token) {
+// 		c.JSON(401, gin.H{"error": "Unauthorized"})
+// 		return
+// 	}
+// 	id := c.Param("id")
+// 	db, err := sql.Open(dbArgs.dbType, dbArgs.dbPath)
+// 	if err != nil {
+// 		panic(err)
+// 	}
+// 	defer db.Close()
 
-	// delete post from database
-	_, err = db.Exec("DELETE FROM blog_posts WHERE id = ?", id)
-	if err != nil {
-		panic(err)
-	}
+// 	// delete post from database
+// 	_, err = db.Exec("DELETE FROM blog_posts WHERE id = ?", id)
+// 	if err != nil {
+// 		panic(err)
+// 	}
 
-	c.JSON(200, gin.H{
-		"message": "Post deleted successfully",
-	})
-}
+// 	c.JSON(200, gin.H{
+// 		"message": "Post deleted successfully",
+// 	})
+// }
 func main() {
 	// createTables()
 
 	router := gin.Default()
 
-	router.GET("/blog/posts", getPosts)
-	router.POST("/blog/posts", createPost)
-	router.GET("/blog/posts/:id", getPost)
-	router.DELETE("/blog/posts/:id", deletePost)
+	// router.GET("/blog/posts", getPosts)
+	// router.POST("/blog/posts", createPost)
+	// router.GET("/blog/posts/:id", getPost)
+	// router.DELETE("/blog/posts/:id", deletePost)
 
-	router.Run(":8080")
+	router.Run("0.0.0.0:8080")
 }
